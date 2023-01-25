@@ -1,24 +1,10 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-    <title>Register Succes</title>
-    <link rel="stylesheet"
-          href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
-          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
-          crossorigin="anonymous">
-    <style>
-    p {
-        font-size: 30px;
-          }
-
-    body{
-        padding-top: 20vh;
-        }
-
-    </style>
+<html xmlns:th="http://www.thymeleaf.org" lang="en" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.thymeleaf.org ">
+<head th:replace="fragments/fragments:: html_head" />
 </head>
+
 <body>
+<div th:replace="fragments/fragments:: header"></div>
 <div class="container" align="center">
     <div>
         <p> You have successfully registered! Please check your email address </p>
@@ -39,5 +25,6 @@
     </div>
     <br><br><br>
 </div>
+<div th:replace="fragments/fragments:: footer"></div>
 </body>
 </html>
