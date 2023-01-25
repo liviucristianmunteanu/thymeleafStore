@@ -11,14 +11,14 @@
     <div class="container">
         <div class="row">
 
-            <div class="col-md-12"><h1>Users list</h1></div>
+            <div class="col-md-12"><h1 class="display-5 fw-bold text-center">Users list</h1></div>
 
         </div>
 
         <div class="row">
 
-            <div class="col-md-12">
-                <table class="table table-hover table-striped table-responsive-md ">
+            <div class="col-md-12 border border-2 border-light p-5 shadow">
+                <table class="table table-hover table-striped table-responsive-md text-center">
                     <thead class="thead-dark">
                     <tr>
                         <th> Username</th>
@@ -35,7 +35,7 @@
                         <td><span th:text="${user.fullName}"> </span></td>
                         <td>
                             <span><a class="btn btn-outline-warning"><i class="bi bi-pencil-square px-1">Edit</i></a></span>
-                            <span><a class="btn btn-outline-danger"><i class="bi bi-trash3 px-1">Delete</i></a></span>
+                            <span><a th:href="@{/users/delete/{id}(id=${user.id})}" class="btn btn-outline-danger"><i class="bi bi-trash3 px-1">Delete</i></a></span>
                         </td>
                     </tr>
                     </tbody>
