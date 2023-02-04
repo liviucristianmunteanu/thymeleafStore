@@ -9,7 +9,6 @@ import java.util.Optional;
 @Service
 public interface UserService {
 
-
     MyUser findUserByEmail(String email);
 
     MyUser findUserByUserName(String username);
@@ -24,8 +23,9 @@ public interface UserService {
 
     MyUser saveUser(MyUser u);
 
-    void updateUser(MyUser user);
-
+    MyUser updateUser(MyUser user);
 
     Optional<MyUser> findById(Long id);
+
+    List<MyUser> searchUser(String keyword);
 }

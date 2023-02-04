@@ -1,22 +1,27 @@
 package com.thymeleaf.store.service.impl;
 
 import com.thymeleaf.store.entity.MyUser;
+import com.thymeleaf.store.entity.Role;
 import com.thymeleaf.store.repository.UserRepository;
 import com.thymeleaf.store.service.UserService;
+import com.thymeleaf.store.service.email.EmailBodyService;
+import com.thymeleaf.store.service.email.EmailSender;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
 
     final private UserRepository userRepository;
+    final private EmailBodyService emailBodyService;
+    final private EmailSender emailSender;
 
     public MyUser findUserByEmail(String email) {
         return userRepository.findByEmail(email);
@@ -26,11 +31,9 @@ public class UserServiceImpl implements UserService {
         return userRepository.findByUsernameIgnoreCase(userName);
     }
 
-    @Override
     public MyUser findUserByRandomToken(String randomToken) {
-        return null;
+        return userRepository.findByRandomToken(randomToken);
     }
-
 
     public boolean findUserByUserNameAndPassword(String userName, String password) {
         final Optional<MyUser> myUser = Optional.ofNullable(userRepository.findByUsernameIgnoreCase(userName));
@@ -49,19 +52,37 @@ public class UserServiceImpl implements UserService {
         MyUser myUser = new MyUser(receivedUser);
         myUser.setPassword(new BCryptPasswordEncoder().encode(receivedUser.getPassword()));
         myUser.setRandomToken(UUID.randomUUID().toString());
+        emailSender.sendEmail(myUser.getEmail(), "Activate your Account", emailBodyService.emailBody(myUser));
         return userRepository.save(myUser);
     }
 
-    @Override
-    public void updateUser(MyUser user) {
-
+    public MyUser updateUser(MyUser receivedUser) {
+        return userRepository.save(receivedUser);
     }
 
+//    public void updateUser(MyUser user) {
+//        List<GrantedAuthority> actualAuthorities = getUserAuthority(user.getRoles());
+//        Authentication newAuth = new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword(), actualAuthorities);
+//        SecurityContextHolder.getContext().setAuthentication(newAuth);
+//        userRepository.save(user);
+//    }
 
     @Override
     public Optional<MyUser> findById(Long id) {
         return userRepository.findById(id);
     }
 
+    @Override
+    public List<MyUser> searchUser(String keyword) {
+        return userRepository.searchUser(Objects.requireNonNullElse(keyword, ""));
+    }
+
+    private List<GrantedAuthority> getUserAuthority(Set<Role> userRoles) {
+        Set<GrantedAuthority> roles = new HashSet<>();
+        for (Role role : userRoles) {
+            roles.add(new SimpleGrantedAuthority(role.getName()));
+        }
+        return new ArrayList<>(roles);
+    }
 
 }
