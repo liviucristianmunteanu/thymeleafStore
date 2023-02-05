@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://www.thymeleaf.org ">
+<head th:replace="fragments/fragments:: html_head" />
+
+</head>
+<body>
+<div th:replace="fragments/fragments:: header">
+</div>
+
+
+<main>
+    <div class="row">
+
+        <div class="col-md-12 border border-2 border-light p-5 shadow">
+            <table class="table table-hover table-responsive-md text-center">
+                <thead class="thead-dark">
+                <tr>
+                    <th> Name</th>
+                    <th> Price</th>
+                    <th> Not available </th>
+                    <th></th>
+
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:if="${products.empty}">
+                    <td colspan="3"> Shopping Cart empty</td>
+                </tr>
+                <tr th:each="product : ${products}">
+                    <td><span th:text="${product.name}">  </span></td>
+                    <td><span th:text="${product.price}"> </span></td>
+                    <td><span th:text="${product.deleted}"> </span></td>
+                    <td ><a th:href="@{'/shopping-cart/product/remove/' + ${product.id}}"
+                            class="fa-solid fa-trash"></a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+
+            <div class="card-body">
+                <form th:action="@{'/shopping-cart/to-order'}" method="POST">
+                    <div class="box-footer text-center">
+                        <button type="submit" class="btn btn-dark">Buy</button>
+                    </div>
+                </form>
+            </div>
+
+
+        </div>
+        <div class="col-md-3"></div>
+    </div>
+</main>
+<div th:replace="fragments/fragments :: footer"></div>
+<div th:replace="fragments/fragments :: scripts"></div>
+
+
+
+</body>
+</html>
