@@ -1,7 +1,10 @@
 package com.thymeleaf.store.startup;
 
+import com.github.javafaker.Faker;
 import com.thymeleaf.store.entity.MyUser;
+import com.thymeleaf.store.entity.Product;
 import com.thymeleaf.store.entity.Role;
+import com.thymeleaf.store.repository.ProductRepository;
 import com.thymeleaf.store.repository.RoleRepository;
 import com.thymeleaf.store.service.UserService;
 import com.thymeleaf.store.util.Constants;
@@ -12,9 +15,12 @@ import org.springframework.stereotype.Component;
 
 import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Stream;
 
 @Component
 public class RunAtStartup {
+    @Autowired
+    private ProductRepository productRepository;
 
     @Autowired
     private UserService userService;
@@ -30,6 +36,7 @@ public class RunAtStartup {
 
         saveUser();
         saveAdminUser();
+        save50Products();
     }
 
     private void saveAdminUser() {
@@ -73,5 +80,14 @@ public class RunAtStartup {
         userService.saveUser(myUser);
     }
 
+    public void save50Products() {
+        Faker faker = new Faker();
+        Stream
+                .generate(() -> productRepository.save(
+                        new Product(faker.company().logo(),faker.commerce().productName(), faker.lorem().sentence(), faker.number().numberBetween(100, 10000), faker.bool().bool()))
+                )
+                .limit(50)
+                .toList();
+    }
 
 }
