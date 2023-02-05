@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://www.thymeleaf.org ">
+<head th:replace="fragments/fragments:: html_head" />
+
+</head>
+
+<body>
+<div th:replace="fragments/fragments:: header">
+</div>
+<main class="container-fluid">
+<div class="container">
+    <div class="row">
+        <div class="col-md-4 col-lg-4 col-xl-4 pt-4" th:each="product : ${products}">
+            <div  class="card text-center text-secondary border border-2 border-light p-2 shadow">
+                <div class="card-body">
+                    <div class="row p-2">
+                        <img th:src="@{${product.imageUrl}}" class="card-img-top" alt="...">
+                    </div>
+                    <div class="row p-2">
+                        <h3 class="card-title fw-bolder fs-2 text" th:text="${product.name}"></h3>
+                    </div>
+                    <div class="row p-2">
+                        <h4 class="card-title fw-bolder  text" th:text="${product.description}"></h4>
+                    </div>
+
+                   <div class="row p-2">
+                       <div class="col-md-6 offset-md-3">
+                           <span class="product-price fw-bolder text-danger" th:text="${product.price}">
+                           </span>
+                            <span class="product-price fw-bolder text-danger"> Euros</span>
+                       </div>
+                   </div>
+                    <div class="row p-2">
+                        <div class="col-md-12 ">
+                            <div class="d-flex flex-row justify-content-evenly align-items-center">
+                                <button class="btn btn-outline-info ">
+                                    <a th:href="@{'/product/add/' + ${product.id}}" >
+                                        <i class="bi bi-cart4 fa-lg px-1" style="font-size: 2rem; color: cornflowerblue;"></i>
+
+                                    </a>
+                                    <span>Add to cart</span>
+                                </button>
+
+
+                            </div>
+
+                        </div>
+                       <!-- <div class="col-md-6">
+                            <a th:href="@{'/product/delete/' + ${product.id}}" >
+                        <i class="bi bi-trash3 fa-lg" style="font-size: 2rem; color: cornflowerblue;"></i>
+                    </a>
+                        </div>-->
+
+                        </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+</main>
+<div th:replace="fragments/fragments :: footer"></div>
+<div th:replace="fragments/fragments :: scripts"></div>
+
+</body>
+</html>
