@@ -25,7 +25,9 @@ public class WebSecurityConfig {
                         "/activation/**",
                         "/activation-success",
                         "/v3/api-docs/**",
-                        "/swagger-ui/**"
+                        "/swagger-ui/**",
+                        "/products/all",
+                        "/users"
                 )
                 .permitAll()
                 .anyRequest()

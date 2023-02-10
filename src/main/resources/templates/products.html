@@ -31,28 +31,42 @@
                             <span class="product-price fw-bolder text-danger"> Euros</span>
                        </div>
                    </div>
-                    <div class="row p-2">
+                    <!--<div class="row p-2">
                         <div class="col-md-12 ">
                             <div class="d-flex flex-row justify-content-evenly align-items-center">
                                 <button class="btn btn-outline-info ">
-                                    <a th:href="@{'/product/add/' + ${product.id}}" >
+                                    <a th:href="@{'/products/add/' + ${product.id}}" >
                                         <i class="bi bi-cart4 fa-lg px-1" style="font-size: 2rem; color: cornflowerblue;"></i>
-
+                                        <span>Add to cart</span>
                                     </a>
-                                    <span>Add to cart</span>
+
                                 </button>
 
 
                             </div>
 
                         </div>
-                       <!-- <div class="col-md-6">
-                            <a th:href="@{'/product/delete/' + ${product.id}}" >
-                        <i class="bi bi-trash3 fa-lg" style="font-size: 2rem; color: cornflowerblue;"></i>
-                    </a>
-                        </div>-->
 
+
+                    </div>-->
+                </div>
+                <div class="row p-2">
+                    <form th:action="@{/products/add/{productId}(productId = ${product.id})}" method="post"
+                          th:object="${product2}">
+                        <div class="input-group w-auto justify-content-end align-items-center">
+                            <input type="button" value="-"
+                                   class="button-minus border rounded-circle  icon-shape icon-sm mx-1 "
+                                   data-field="quantity">
+                            <input type="number" th:value="${quantity}" step="1" max="10" value="1"
+                                   name="quantity"
+                                   class="quantity-field border-0 text-center w-25">
+                            <input type="button" value="+"
+                                   class="button-plus border rounded-circle icon-shape icon-sm "
+                                   data-field="quantity">
+                            <input type="hidden" th:value="${id}"/>
+                            <button type="submit">+</button>
                         </div>
+                    </form>
                 </div>
 
             </div>
@@ -62,6 +76,41 @@
 </main>
 <div th:replace="fragments/fragments :: footer"></div>
 <div th:replace="fragments/fragments :: scripts"></div>
+<script>
+    function incrementValue(e) {
+        e.preventDefault();
+        var fieldName = $(e.target).data('field');
+        var parent = $(e.target).closest('div');
+        var currentVal = parseInt(parent.find('input[name=' + fieldName + ']').val(), 10);
 
+        if (!isNaN(currentVal)) {
+            parent.find('input[name=' + fieldName + ']').val(currentVal + 1);
+        } else {
+            parent.find('input[name=' + fieldName + ']').val(0);
+        }
+    }
+
+    function decrementValue(e) {
+        e.preventDefault();
+        var fieldName = $(e.target).data('field');
+        var parent = $(e.target).closest('div');
+        var currentVal = parseInt(parent.find('input[name=' + fieldName + ']').val(), 10);
+
+        if (!isNaN(currentVal) && currentVal > 0) {
+            parent.find('input[name=' + fieldName + ']').val(currentVal - 1);
+        } else {
+            parent.find('input[name=' + fieldName + ']').val(0);
+        }
+    }
+
+    $('.input-group').on('click', '.button-plus', function(e) {
+        incrementValue(e);
+    });
+
+    $('.input-group').on('click', '.button-minus', function(e) {
+        decrementValue(e);
+    });
+
+</script>
 </body>
 </html>

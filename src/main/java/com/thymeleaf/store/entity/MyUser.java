@@ -8,16 +8,14 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.io.Serial;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Getter
 @Setter
-@NoArgsConstructor
 @Entity
 public class MyUser implements UserDetails {
+    @Serial
+    private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -55,13 +53,30 @@ public class MyUser implements UserDetails {
     @JoinTable(name = "users_roles",
             joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "role_id"))
-    private Set<Role> roles = new HashSet<>();
+    private Set<Role> roles;
 
     @Transient
     private String passwordConfirm;
 
     @Transient
-    private List<GrantedAuthority> authorities = null;
+    private List<GrantedAuthority> authorities;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    private ShoppingCart shoppingCart;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<Order> orders;
+
+    public MyUser() {
+        this.shoppingCart = new ShoppingCart();
+        this.orders = new ArrayList<>();
+        this.roles = new HashSet<>();
+    }
+
+    public void addOrderToUser(Order order) {
+        this.orders.add(order);
+        order.setUser(this);
+    }
 
     public MyUser(MyUser myUser) {
         this.enabled = myUser.isEnabled();
@@ -73,6 +88,8 @@ public class MyUser implements UserDetails {
         this.accountNonLocked = myUser.isAccountNonLocked();
         this.credentialsNonExpired = myUser.isCredentialsNonExpired();
         this.email = myUser.getEmail();
+        this.shoppingCart = myUser.getShoppingCart();
+        this.orders = myUser.getOrders();
     }
 
     public MyUser(String username, String password, boolean enabled, boolean accountNonExpired,

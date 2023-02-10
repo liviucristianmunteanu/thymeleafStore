@@ -23,17 +23,15 @@ public class Product {
     private String name;
 
     private String description;
-
-
     private float price;
 
-    private Boolean deleted;
+    private Integer quantity;
 
-    public Product(String imageUrl,String name,String description, float price, Boolean deleted) {
+    public Product(String imageUrl,String name,String description, float price, Integer quantity) {
         this.imageUrl = imageUrl;
         this.name = name;
         this.description = description;
         this.price = price;
-        this.deleted = deleted;
+        this.quantity = quantity;
     }
 }

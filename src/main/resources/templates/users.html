@@ -11,7 +11,7 @@
     <div class="container">
         <div class="row">
 
-            <div class="col-md-12"><h1 class="display-5 fw-bold text-center">Users list</h1></div>
+            <div class="col-md-12"><h1 class="display-5 fw-bold text-center text-secondary">Users list</h1></div>
 
         </div>
 
@@ -21,18 +21,18 @@
                 <table id="usersTable" class="table table-hover table-responsive-md text-center">
                     <thead class="thead-dark">
                     <tr>
-                        <th class="text-center"> Username</th>
-                        <th class="text-center"> Mail</th>
-                        <th class="text-center"> Full name</th>
-                        <th class="text-center"> Actions </th>
+                        <th class="text-center text-secondary"> Username</th>
+                        <th class="text-center text-secondary"> Mail</th>
+                        <th class="text-center text-secondary"> Full name</th>
+                        <th class="text-center text-secondary"> Actions </th>
                     </tr>
                     </thead>
                     <tbody>
 
                     <tr th:each="user : ${users}" class="text-center">
-                        <td><span th:text="${user.username}">  </span></td>
-                        <td><span th:text="${user.email}"> </span></td>
-                        <td><span th:text="${user.fullName}"> </span></td>
+                        <td><span th:text="${user.username}" class="text-center text-secondary">  </span></td>
+                        <td><span th:text="${user.email}" class="text-center text-secondary"> </span></td>
+                        <td><span th:text="${user.fullName}" class="text-center text-secondary"> </span></td>
                         <td>
                             <span><a class="btn btn-outline-warning"><i class="bi bi-pencil-square px-1">Edit</i></a></span>
                             <span><a th:href="@{/users/delete/{id}(id=${user.id})}" class="btn btn-outline-danger"><i class="bi bi-trash3 px-1">Delete</i></a></span>

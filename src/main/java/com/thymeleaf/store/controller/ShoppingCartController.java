@@ -4,6 +4,7 @@ import com.thymeleaf.store.entity.MyUser;
 import com.thymeleaf.store.entity.Product;
 import com.thymeleaf.store.repository.OrderRepository;
 import com.thymeleaf.store.repository.ProductRepository;
+import com.thymeleaf.store.repository.ShoppingCartProductQuantityRepository;
 import com.thymeleaf.store.service.ShoppingCartService;
 import com.thymeleaf.store.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -31,6 +33,10 @@ public class ShoppingCartController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private ShoppingCartProductQuantityRepository quantityRepository;
+
 
 //    @PutMapping(value = "/add/{cartId}")
 //    public ResponseEntity addProductToShoppingCart(@PathVariable Integer cartId, @RequestParam Integer productId) {
@@ -82,10 +88,14 @@ public class ShoppingCartController {
         //aducem userul din db pe baza username-ului
         MyUser userByUserName = userService.findUserByUserName(currentPrincipalName);
 
-        model.addAttribute("products", userByUserName.getShoppingCart().getProducts());
+        List<Product> productsByShoppingCartId = quantityRepository.getProductsByShoppingCartId(userByUserName.getId());
+
+
+        model.addAttribute("products", productsByShoppingCartId);
 
         return "shopping-cart";
     }
+
 
     @RequestMapping(value = "/product/remove/{productId}")
     public String removeProductFromShoppingCart(@PathVariable Integer productId) {
