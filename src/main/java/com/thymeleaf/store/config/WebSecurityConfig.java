@@ -20,6 +20,7 @@ public class WebSecurityConfig {
                 .csrf().disable()
                 .authorizeHttpRequests()
                 .requestMatchers(
+                        "/css/**",
                         "/login",
                         "/register",
                         "/activation/**",
@@ -35,7 +36,7 @@ public class WebSecurityConfig {
                 .and().formLogin()
                 .loginPage("/login")
                 .failureUrl("/login-error")
-                .defaultSuccessUrl("/users").and()
+                .defaultSuccessUrl("/login").and()
                 .logout().logoutSuccessUrl("/login").and()
                 .sessionManagement()
                 .maximumSessions(1);
