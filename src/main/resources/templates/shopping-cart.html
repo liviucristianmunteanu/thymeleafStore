@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="en" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
       xsi:schemaLocation="http://www.thymeleaf.org ">
-<head th:replace="fragments/fragments:: html_head" />
+<head th:replace="fragments/fragments:: html_head"/>
 
 </head>
 <body>
@@ -9,52 +9,63 @@
 </div>
 
 
-<main>
-    <div class="row">
+<main class="container-fluid">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h1 class="display-5 fw-bold text-center text-secondary">Shopping Cart</h1>
+            </div>
+        </div>
+        <div class="row">
 
-        <div class="col-md-12 border border-2 border-light p-5 shadow">
-            <table class="table table-hover table-responsive-md text-center">
-                <thead class="thead-dark">
-                <tr>
-                    <th> Name</th>
-                    <th> Price</th>
-                    <th> Quantity </th>
-                    <th></th>
+            <div class="col-md-12 border border-2 border-light p-5 shadow">
 
-                </tr>
-                </thead>
-                <tbody>
-                <tr th:if="${products.empty}">
-                    <td colspan="3"> Shopping Cart empty</td>
-                </tr>
-                <tr th:each="product : ${products}">
-                    <td><span th:text="${product.name}">  </span></td>
-                    <td><span th:text="${product.price}"> </span></td>
-                    <td><span th:text="${product.quantity}"> </span></td>
-                    <td ><a th:href="@{'/shopping-cart/product/remove/' + ${product.id}}"
-                            class="fa-solid fa-trash"></a>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
+                <table id="shopping-cart" class="table table-hover table-responsive-md text-center">
+                    <thead class="thead-dark">
+                    <tr>
 
-            <div class="card-body">
+                        <th class="col-md-2 text-center text-secondary"> Image</th>
+                        <th class="col-md-2 text-center text-secondary"> Name</th>
+                        <th class="col-md-2 text-center text-secondary"> Price</th>
+                        <th class="col-md-1 text-center text-secondary"> Quantity</th>
+                        <th class="col-md-2 text-center text-secondary"> Total</th>
+                        <th class="col-md-1 text-center text-secondary"> Delete</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:if="${products.empty}">
+                        <td colspan="3"> Shopping Cart empty</td>
+                    </tr>
+                    <tr th:each="product : ${products}" class="text-center">
+
+                        <td class="align-middle"><img th:src="@{${product.imageUrl}}" class="img-thumbnail" alt="..."></td>
+                        <td class="align-middle"><span th:text="${product.name}" class="text-center text-secondary">  </span></td>
+                        <td class="align-middle"><span th:text="${product.price}" class="text-center text-secondary"> </span></td>
+                        <td class="align-middle"><span th:text="${product.quantity}" class="text-center text-secondary"> </span></td>
+                        <td class="align-middle"><span th:with="total = ${product.quantity * product.price}" class="text-center text-secondary">
+                         <p th:text="${total}"></p>
+                        </span></td>
+                        <td class="align-middle"><a th:href="@{'/shopping-cart/product/remove/' + ${product.id}}" class="btn btn-outline-danger">
+                            <i class="bi bi-trash3 px-1">Delete</i>
+                        </a>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="mt-5">
                 <form th:action="@{'/shopping-cart/to-order'}" method="POST">
                     <div class="box-footer text-center">
-                        <button type="submit" class="btn btn-dark">Buy</button>
+                        <button type="submit" class="btn btn-outline-success">Place order</button>
                     </div>
                 </form>
             </div>
-
-
         </div>
-        <div class="col-md-3"></div>
     </div>
 </main>
 <div th:replace="fragments/fragments :: footer"></div>
 <div th:replace="fragments/fragments :: scripts"></div>
-
-
 
 </body>
 </html>
