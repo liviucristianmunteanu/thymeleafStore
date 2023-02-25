@@ -1,16 +1,19 @@
 package com.thymeleaf.store.controller;
 
 import com.thymeleaf.store.entity.MyUser;
+import com.thymeleaf.store.entity.Order;
 import com.thymeleaf.store.entity.Product;
 import com.thymeleaf.store.repository.OrderRepository;
 import com.thymeleaf.store.repository.ProductRepository;
 import com.thymeleaf.store.repository.ShoppingCartProductQuantityRepository;
 import com.thymeleaf.store.service.ShoppingCartService;
 import com.thymeleaf.store.service.UserService;
+import jakarta.persistence.Transient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -61,9 +64,9 @@ public class ShoppingCartController {
 //
 //        return ResponseEntity.ok().build();
 //    }
-
+    @Transactional
     @RequestMapping(value = "/to-order")
-    public String convertToOrder() {
+    public String convertToOrder(Model model) {
 
         //stabilim care e username-ul user-ului autentificat
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -72,10 +75,16 @@ public class ShoppingCartController {
         //aducem userul din db pe baza username-ului
         MyUser user = userService.findUserByUserName(currentPrincipalName);
 
-        orderRepository.save(shoppingCartService.convertShoppingCartToOrder(user.getShoppingCart()));
-        user.getShoppingCart().getProducts().clear();
-        userService.updateUser(user);
+        List<Product> productsByShoppingCartId = quantityRepository.getProductsByShoppingCartId(user.getId());
+        shoppingCartService.findById(user.getId().intValue()).ifPresent(cart -> {
+            cart.setProducts(productsByShoppingCartId);
+            user.setShoppingCart(cart);
+        });
 
+        Order order = orderRepository.save(shoppingCartService.convertShoppingCartToOrder(user.getShoppingCart()));
+        user.getShoppingCart().getProducts().clear();
+        quantityRepository.deleteByShoppingCartId(user.getId().intValue());
+        model.addAttribute("order", order);
         return "order-successful";
     }
 
@@ -92,6 +101,9 @@ public class ShoppingCartController {
 
 
         model.addAttribute("products", productsByShoppingCartId);
+
+        model.addAttribute("cartSize", productsByShoppingCartId.size());
+
 
         return "shopping-cart";
     }

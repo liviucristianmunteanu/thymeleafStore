@@ -15,6 +15,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -35,7 +36,13 @@ public class ProductController {
     @RequestMapping(value = {"/all"})
     public String index(Model model) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+
+        String currentPrincipalName = auth.getName();
+        MyUser userByUserName = userService.findUserByUserName(currentPrincipalName);
+
+        List<Product> productsByShoppingCartId = quantityRepository.getProductsByShoppingCartId(userByUserName.getId());
         model.addAttribute("products", productRepository.findByQuantityGreaterThan(0L));
+        model.addAttribute("cartSize", productsByShoppingCartId.size());
         return "products";
     }
     @RequestMapping(value = "/add/{id}")
@@ -63,10 +70,17 @@ public class ProductController {
             userByUserName.getShoppingCart().addProductToShoppingCart(productToBeAddedToShoppingCart);
 
 
-            product.setQuantity(product.getQuantity() - quantityToBeOrdered);
+
+
+                    product.setQuantity(product.getQuantity() - quantityToBeOrdered);
             quantityRepository.save(new ShoppingCartProductQuantity(userByUserName.getId().intValue(), product.getId(), quantityToBeOrdered));
             productRepository.save(product);
             userService.updateUser(userByUserName);
+            Integer cartSize =  quantityRepository.getProductsByShoppingCartId(userByUserName.getId()).size();
+
+
+
+
         });
 
         return Constants.REDIRECT_TO_PRODUCTS;

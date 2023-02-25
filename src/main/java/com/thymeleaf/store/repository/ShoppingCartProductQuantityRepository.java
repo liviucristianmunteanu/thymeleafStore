@@ -18,4 +18,6 @@ public interface ShoppingCartProductQuantityRepository extends JpaRepository<Sho
     @Modifying
     @Transactional
     void deleteByShoppingCartIdAndProductId(Integer shoppingCartId, Integer productId);
+
+    void deleteByShoppingCartId(Integer shoppingCartId);
 }
