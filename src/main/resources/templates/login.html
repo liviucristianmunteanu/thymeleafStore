@@ -1,15 +1,17 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="en" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-      xsi:schemaLocation="http://www.thymeleaf.org ">
-<head th:replace="fragments/fragments:: html_head"/>
-
+<html xmlns:th="http://www.thymeleaf.org" lang="en" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.thymeleaf.org ">
+<head th:replace="fragments/fragments:: html_head" />
 </head>
-<body class="container-fluid">
+<body>
 <div th:replace="fragments/fragments:: header">
 </div>
-<main class="container-fluid">
-    <div class="container">
-
+<main class="container  flex-column align-items-center justify-content-center">
+    <div class="col-md-6 offset-md-3">
+        <div class="row">
+            <div class="col-md-12">
+                <h1 class="h1 fw-bold text-center text-secondary py-4">Login form</h1>
+            </div>
+        </div>
 
         <!--<div th:if="${loginError}" class="alert alert-danger" role="alert">
             <p class="error">Wrong user or password</p>
@@ -17,24 +19,35 @@
 
         <form class="border border-2 border-light p-5 shadow" action="#" th:action="@{/login}" method="post">
             <div class="mb-3">
-                <label class="form-label" for="username">Username</label>
-                <input type="text" id="username" class="from-control" name="username"
+                <label for="username" class="form-label" >Username</label>
+                <input type="text"
+                       class="form-control"
+                       id="username"
+                       name="username"
                        placeholder="Enter your username"
-                       autofocus="autofocus" required minlength="3" maxlength="20" pattern="[a-zA-Z0-9]+"/>
+                       autofocus="autofocus"
+                       required
+                       minlength="3"
+                       maxlength="20"
+                       pattern="[a-zA-Z0-9]+"/>
             </div>
 
             <div class="mb-3">
                 <label class="form-label" for="password">Password</label>:
-                <input type="password" id="password" class="from-control" name="password" required minlength="3"
+                <input type="password"
+                       id="password"
+                       class="form-control"
+                       name="password"
+                       required
+                       minlength="3"
                        placeholder="Type your password"
                        maxlength="15"/>
             </div>
-
-
-            <div class="mb-3">
-                <button type="submit" class="btn btn-success">Login</button>
-
+            <div class="d-flex justify-content-center">
+                <button type="submit" class="btn btn-outline-info">Login</button>
             </div>
+
+
         </form>
     </div>
 </main>
