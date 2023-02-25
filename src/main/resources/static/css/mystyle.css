@@ -2,12 +2,12 @@ body {
   min-height: 100vh;
   position: relative;
 }
-#footer{
+/*#footer{
   position: absolute;
   bottom: 0;
   left: 0;
   right: 0
-}
+}*/
 .navbar-custom{
     background-color: #39CCCC;
     color: white;
@@ -35,5 +35,31 @@ body {
   font-weight: 600;
 }
 
+.product-title{
+        overflow: hidden;
+           text-overflow: ellipsis;
+           display: -webkit-box;
+           -webkit-line-clamp: 1; /* number of lines to show */
+                   line-clamp: 1;
+           -webkit-box-orient: vertical;
+}
+
+.product-description{
+       overflow: hidden;
+          text-overflow: ellipsis;
+          display: -webkit-box;
+          -webkit-line-clamp: 3; /* number of lines to show */
+                  line-clamp: 3;
+          -webkit-box-orient: vertical;
+}
+
+.product-thumbnail{
+    height: 200px;
+    object-fit: contain;
+}
+
+.card-footer{
+    background-color: #fff;
+}
 
 

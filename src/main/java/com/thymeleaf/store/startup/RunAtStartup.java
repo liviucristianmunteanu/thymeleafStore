@@ -89,7 +89,7 @@ public class RunAtStartup {
 
         List<Product> products = Stream
                 .generate(() -> productRepository.save(
-                        new Product(faker.company().logo(),faker.commerce().productName(), faker.lorem().sentence(), faker.number().numberBetween(100, 10000),  faker.number().numberBetween(0, 199)))
+                        new Product(faker.company().logo(),faker.commerce().productName(), faker.lorem().sentence(), faker.number().numberBetween(100, 2000),  faker.number().numberBetween(0, 199)))
                 )
                 .limit(3)
                 .toList();
@@ -109,9 +109,9 @@ public class RunAtStartup {
         Faker faker = new Faker();
         Stream
                 .generate(() -> productRepository.save(
-                        new Product(faker.company().logo(),faker.commerce().productName(), faker.lorem().sentence(), faker.number().numberBetween(100, 10000),  faker.number().numberBetween(0, 199)))
+                        new Product(faker.company().logo(),faker.commerce().productName(), faker.lorem().sentence(), faker.number().numberBetween(100, 2000),  faker.number().numberBetween(0, 199)))
                 )
-                .limit(5)
+                .limit(12)
                 .toList();
     }
 

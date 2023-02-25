@@ -70,8 +70,8 @@
                         </li>
 
                         <li class="nav-item mx-1">
-                            <a class="btn btn-outline-light" th:href="@{/shopping-cart}"><i class="bi bi-cart4" ></i>
-                                <span class=" badge rounded-pill bg-danger" th:text="${cartSize}"></span>
+                            <a class="btn btn-outline-light position-relative" th:href="@{/shopping-cart}"><i class="bi bi-cart4" ></i>
+                                <span class="position-absolute top-0 start-100 translate-middle badge border border-light rounded-circle bg-danger p-2" th:text="${cartSize}"><span class="visually-hidden">unread messages</span></span>
                                 My cart</a>
                         </li>
                         <li sec:authorize="!isAuthenticated()" class="nav-item mx-1">

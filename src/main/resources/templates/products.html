@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="en" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
       xsi:schemaLocation="http://www.thymeleaf.org ">
-<head th:replace="fragments/fragments:: html_head" />
+<head th:replace="fragments/fragments:: html_head"/>
 
 </head>
 
@@ -9,74 +9,61 @@
 <div th:replace="fragments/fragments:: header">
 </div>
 <main class="container-fluid">
-<div class="container">
-    <div class="row">
-        <div class="col-md-4 col-lg-4 col-xl-4 pt-4" th:each="product : ${products}">
-            <div  class="card text-center text-secondary border border-2 border-light p-2 shadow">
-                <div class="card-body">
-                    <div class="row p-2">
-                        <img th:src="@{${product.imageUrl}}" class="card-img-top" alt="...">
-                    </div>
-                    <div class="row p-2">
-                        <h3 class="card-title fw-bolder fs-2 text" th:text="${product.name}"></h3>
-                    </div>
-                    <div class="row p-2">
-                        <h4 class="card-title fw-bolder  text" th:text="${product.description}"></h4>
-                    </div>
-
-                   <div class="row p-2">
-                       <div class="col-md-6 offset-md-3">
-                           <span class="product-price fw-bolder text-danger" th:text="${product.price}">
-                           </span>
-                            <span class="product-price fw-bolder text-danger"> Euros</span>
-                       </div>
-                   </div>
-                    <!--<div class="row p-2">
-                        <div class="col-md-12 ">
-                            <div class="d-flex flex-row justify-content-evenly align-items-center">
-                                <button class="btn btn-outline-info ">
-                                    <a th:href="@{'/products/add/' + ${product.id}}" >
-                                        <i class="bi bi-cart4 fa-lg px-1" style="font-size: 2rem; color: cornflowerblue;"></i>
-                                        <span>Add to cart</span>
-                                    </a>
-
-                                </button>
-
-
-                            </div>
-
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3 col-lg-3 col-xl-3 pt-2 d-flex align-items-stretch" th:each="product : ${products}">
+                <div class="card text-center text-secondary border border-2 border-light p-2 shadow">
+                    <div class="card-body ">
+                        <div class="row">
+                            <img th:src="@{${product.imageUrl}}" class="card-img-top product-thumbnail" alt="...">
+                        </div>
+                        <div class="row">
+                            <h6 class="card-title fw-bolder text product-title" th:text="${product.name}"></h6>
+                        </div>
+                        <div class="row">
+                            <p class="card-text  text product-description" th:text="${product.description}"></p>
                         </div>
 
+                        <div class="row ">
+                            <div class="col-md-6 offset-md-3">
+                                <div class="d-flex justify-content-center">
+                                    <h5 class="product-price fw-bolder text-danger p-1" th:text="${product.price}"></h5>
+                                    <h5  class="product-price fw-bolder text-danger p-1">&euro;</h5>
+                                </div>
 
-                    </div>-->
-                </div>
-                <div class="row p-2">
-                    <form th:action="@{/products/add/{productId}(productId = ${product.id})}" method="post"
-                          th:object="${product2}">
-                        <div class="input-group w-auto justify-content-end align-items-center">
-                            <input type="button" value="-"
-                                   class="button-minus border rounded-circle  icon-shape icon-sm mx-1 "
-                                   data-field="quantity">
-                            <input type="number" th:value="${quantity}" step="1" max="10" value="1"
-                                   name="quantity"
-                                   class="quantity-field border-0 text-center w-25">
-                            <input type="button" value="+"
-                                   class="button-plus border rounded-circle icon-shape icon-sm "
-                                   data-field="quantity">
-                            <input type="hidden" th:value="${id}"/>
-                            <div class="row">
+                            </div>
+                        </div>
+
+                    </div>
+                    <div>
+                        <form th:action="@{/products/add/{productId}(productId = ${product.id})}" method="post"
+                              th:object="${product2}">
+                            <div class="input-group w-auto justify-content-center align-items-center py-3">
+                                <input type="button" value="-"
+                                       class="button-minus border rounded-circle  icon-shape icon-sm mx-1 "
+                                       data-field="quantity">
+                                <input type="number" th:value="${quantity}" step="1" max="10" value="1"
+                                       placeholder="Type quantity"
+                                       name="quantity"
+                                       class="quantity-field border-0 text-center w-50">
+                                <input type="button" value="+"
+                                       class="button-plus border rounded-circle icon-shape icon-sm "
+                                       data-field="quantity">
+                                <input type="hidden" th:value="${id}"/>
+
+                            </div>
+                            <div  class="card-footer">
                                 <button type="submit" class="btn btn-outline-info">
+                                    <i class="bi bi-cart4  fa-3x"></i>
                                     Add to shopping cart
                                 </button>
                             </div>
-                        </div>
-                    </form>
+                        </form>
+                    </div>
                 </div>
-
             </div>
         </div>
     </div>
-</div>
 </main>
 <div th:replace="fragments/fragments :: footer"></div>
 <div th:replace="fragments/fragments :: scripts"></div>
@@ -114,6 +101,7 @@
     $('.input-group').on('click', '.button-minus', function(e) {
         decrementValue(e);
     });
+
 
 </script>
 </body>
