@@ -23,7 +23,7 @@ public class LoginController {
             System.out.println(authentication);
             return "login.html";
         }
-        return Constants.REDIRECT_TO_USERS;
+        return Constants.REDIRECT_TO_PRODUCTS;
     }
 
 

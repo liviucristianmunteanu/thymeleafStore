@@ -35,37 +35,33 @@
                     <li class="nav-item ">
                         <a class="nav-link text-light fs-5"  href="/products/all">Products</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-light fs-5" aria-current="page" th:href="@{/users}">Users</a>
-                    </li>
-
                 </ul>
 
                 <div class="d-flex" >
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                        <li>Logged in as:
-                            <!--<div sec:authorize="isAuthenticated()">
-
-                            </div>
-                                <div sec:authentication="username" class="text-light">
-
-                                </div>
-                                <div sec:authorize="isAnonymous()">
-
-                                </div>-->
-
-                        </li>
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle btn btn-outline-light" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                <i class="bi bi-person-bounding-box"></i>
+                                <span><i class="bi bi-person-bounding-box"></i></span>
 
+                                <span sec:authorize="isAuthenticated()">
+                                    <span th:text="${#authentication.principal.username}"></span>
+                                </span>
                             </a>
                             <ul class="dropdown-menu">
-                                <li><a class="dropdown-item fs-6" th:href="@{products/add-new}">Add new product</a></li>
-                                <li><a class="dropdown-item fs-6" href="#">Another action</a></li>
-                                <li><a class="dropdown-item fs-6" href="#">Another action</a></li>
-                                <li><a class="dropdown-item fs-6" href="#">Something else here</a></li>
-                                <li><a class="dropdown-item fs-6" th:href="@{/logout}"><i class="bi bi-box-arrow-left"></i>Logout</a></li>
+                                <li sec:authorize="hasRole('ROLE_ADMIN')" >
+                                    <a class="dropdown-item fs-6" th:href="@{/users}">Users</a>
+                                </li>
+                                <li sec:authorize="hasRole('ROLE_ADMIN')">
+                                    <a class="dropdown-item fs-6" th:href="@{/products/add-new}">Add new product</a>
+                                </li>
+                                <li sec:authorize="hasRole('ROLE_ADMIN')">
+                                    <a class="dropdown-item fs-6" href="#">Add new category</a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item fs-6" th:href="@{/logout}">
+                                        <i class="bi bi-box-arrow-left"></i>Logout
+                                    </a>
+                                </li>
                             </ul>
                         </li>
 
