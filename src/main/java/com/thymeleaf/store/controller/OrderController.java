@@ -4,6 +4,7 @@ import com.thymeleaf.store.entity.MyUser;
 import com.thymeleaf.store.entity.Order;
 import com.thymeleaf.store.repository.OrderRepository;
 import com.thymeleaf.store.repository.UserRepository;
+import com.thymeleaf.store.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,17 +21,18 @@ import java.util.Optional;
 public class OrderController {
 
     @Autowired
-    private OrderRepository orderRepository;
+    private OrderService orderService;
 
     @Autowired
     private UserRepository userRepository;
-    @GetMapping(value="/")
-    public String findAll(Model model){
-        model.addAttribute("orders", orderRepository.findAll());
+    @GetMapping(value="/all")
+    public String findAllOrders(Model model){
+        List<Order> orders = orderService.findOrders();
+        model.addAttribute("orders", orderService.findOrders());
         return "orders";
     }
 
-    @GetMapping(value = "/get-all/{userId}")
+    @GetMapping(value = "/all/{userId}")
     public List<Order> getAllOrders(@PathVariable Long userId) throws UserPrincipalNotFoundException {
         Optional<MyUser> optionalUser = userRepository.findById(userId);
         if (optionalUser.isPresent())

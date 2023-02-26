@@ -1,54 +1,75 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="en" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
       xsi:schemaLocation="http://www.thymeleaf.org ">
-<head th:replace="fragments/fragments:: html_head" />
+<head th:replace="fragments/fragments:: html_head"/>
 
 </head>
-<body>
+<body class="d-flex flex-column min-vh-100">
 <div th:replace="fragments/fragments:: header">
 </div>
 
 
-<main>
+<main class="container-fluid">
     <div class="container">
         <div class="row">
-
-            <div class="col-md-4 col-lg-4 col-xl-4 pt-4">
-                <div class="card text-center text-secondary border border-2 border-light p-2 shadow">
-                    <table class="table table-hover table-responsive-md text-center">
+            <div class="col-md-12">
+                <h1 class="h1 fw-bold text-center text-secondary py-4">Orders</h1>
+            </div>
+        </div>
+        <div class="row">
+                <div class="text-center text-secondary border border-2 border-light p-2 shadow">
+                    <table class="table  table-responsive-md text-center">
                         <thead class="thead-dark">
                         <tr>
                             <th> Order id</th>
                             <th> Order date</th>
-                            <th> User </th>
-
-
+                            <th> User</th>
+                            <th> User id</th>
+                            <th> Products</th>
                         </tr>
                         </thead>
                         <tbody>
-                        <!--<tr th:if="${order.empty}">
-                            <td colspan="3"> There are no orders</td>
-                        </tr>-->
+
                         <tr th:each="order : ${orders}">
                             <td><span th:text="${order.id}">  </span></td>
-                            <td><span th:text="${order.orderDate}"> </span></td>
+                            <td><span th:text="${#temporals.format(order.orderDate, 'dd-MM-yyyy HH:mm')}" class="text-center text-secondary"> </span></td>
                             <td><span th:text="${order.user.username}"> </span></td>
-                           <<td ><span th:each="product : ${products}"></span>
+                            <td><span th:text="${order.user.id}"> </span></td>
+                            <td>
+                                <table id="shopping-cart" class="table table-responsive-md text-center">
+                                    <thead class="d-none">
+                                    <tr>
+                                        <th class="col-md-5 text-center text-secondary"> Name</th>
+                                       <!-- <th class="col-md-3 text-center text-secondary"> Quantity</th>-->
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+
+                                    <tr th:each="product : ${order.products}" class="text-center">
+                                        <td class="col-md-5 align-middle"><span th:text="${product.name}"
+                                                                                class="text-center text-secondary">  </span>
+                                        </td>
+                                       <!-- <td class="col-md-3 align-middle"><span th:text="${product.quantity}"
+                                                                                class="text-center text-secondary"> </span>
+                                        </td>-->
+
+                                        </span></td>
+
+                                    </tr>
+                                    </tbody>
+
+                                </table>
                             </td>
                         </tr>
                         </tbody>
                     </table>
                 </div>
 
-
-
-            </div>
         </div>
     </div>
 </main>
 <div th:replace="fragments/fragments :: footer"></div>
 <div th:replace="fragments/fragments :: scripts"></div>
-
 
 
 </body>

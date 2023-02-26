@@ -96,4 +96,12 @@ public class ProductController {
         productRepository.save(product);
         return Constants.REDIRECT_TO_PRODUCTS;
     }
+
+    @RequestMapping(value = {"/inventory"})
+    public String getInventoryProducts(Model model) {
+
+        model.addAttribute("products", productRepository.findByQuantityGreaterThan(0L));
+
+        return "inventory";
+    }
 }

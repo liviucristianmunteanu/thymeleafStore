@@ -20,7 +20,7 @@
 
 
 </head>
-<body class="container-fluid">
+<body class="d-flex flex-column min-vh-100">
 <header th:fragment = "header" class="navbar container-fluid pt-0 text-white sticky-top">
 
     <nav class="navbar navbar-expand-lg sticky-top container-fluid navbar-custom text-white py-3" >
@@ -34,6 +34,10 @@
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item ">
                         <a class="nav-link text-light fs-5"  href="/products/all">Products</a>
+                    </li>
+                    <li sec:authorize="hasRole('ROLE_USER')" class="nav-item ">
+                       <!-- <a class="nav-link text-light fs-5"  th:href="@{/orders/all/} + ${user.id}">My Orders</a>-->
+                        <a class="nav-link text-light fs-5 disabled"  th:href="@{/orders/all/}">My Orders</a>
                     </li>
                 </ul>
 
@@ -49,13 +53,19 @@
                             </a>
                             <ul class="dropdown-menu">
                                 <li sec:authorize="hasRole('ROLE_ADMIN')" >
+                                    <a class="dropdown-item fs-6" th:href="@{/orders/all}">Orders</a>
+                                </li>
+                                <li sec:authorize="hasRole('ROLE_ADMIN')" >
                                     <a class="dropdown-item fs-6" th:href="@{/users}">Users</a>
                                 </li>
                                 <li sec:authorize="hasRole('ROLE_ADMIN')">
                                     <a class="dropdown-item fs-6" th:href="@{/products/add-new}">Add new product</a>
                                 </li>
                                 <li sec:authorize="hasRole('ROLE_ADMIN')">
-                                    <a class="dropdown-item fs-6" href="#">Add new category</a>
+                                    <a class="dropdown-item fs-6" th:href="@{/products/inventory}">Inventory</a>
+                                </li>
+                                <li sec:authorize="hasRole('ROLE_ADMIN')">
+                                    <a class="dropdown-item fs-6 disabled" href="#">Add new category</a>
                                 </li>
                                 <li>
                                     <a class="dropdown-item fs-6" th:href="@{/logout}">
@@ -84,7 +94,7 @@
     </nav>
 
 </header>
-<footer id="footer" th:fragment="footer" class="navbar container-fluid navbar-custom">
+<footer id="footer" th:fragment="footer" class="navbar container-fluid navbar-custom mt-auto">
     <div class="container">
     <p class="text-light">&copy; 2022 thymeleafStore.com</p>
     </div>
