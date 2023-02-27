@@ -43,6 +43,8 @@ public class ProductController {
         List<Product> productsByShoppingCartId = quantityRepository.getProductsByShoppingCartId(userByUserName.getId());
         model.addAttribute("products", productRepository.findByQuantityGreaterThan(0L));
         model.addAttribute("cartSize", productsByShoppingCartId.size());
+        model.addAttribute("id", userByUserName.getId());
+
         return "products";
     }
     @RequestMapping(value = "/add/{id}")

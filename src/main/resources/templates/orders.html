@@ -17,54 +17,51 @@
             </div>
         </div>
         <div class="row">
-                <div class="text-center text-secondary border border-2 border-light p-2 shadow">
-                    <table class="table  table-responsive-md text-center">
-                        <thead class="thead-dark">
-                        <tr>
-                            <th> Order id</th>
-                            <th> Order date</th>
-                            <th> User</th>
-                            <th> User id</th>
-                            <th> Products</th>
-                        </tr>
-                        </thead>
-                        <tbody>
+            <div class="text-center text-secondary border border-2 border-light p-2 shadow">
+                <table class="table  table-responsive-md text-center">
+                    <thead class="thead-dark">
+                    <tr>
+                        <th> Order id</th>
+                        <th> Order date</th>
+                        <th> User</th>
+                        <th> User id</th>
+                        <th> Products</th>
+                    </tr>
+                    </thead>
+                    <tbody>
 
-                        <tr th:each="order : ${orders}">
-                            <td><span th:text="${order.id}">  </span></td>
-                            <td><span th:text="${#temporals.format(order.orderDate, 'dd-MM-yyyy HH:mm')}" class="text-center text-secondary"> </span></td>
-                            <td><span th:text="${order.user.username}"> </span></td>
-                            <td><span th:text="${order.user.id}"> </span></td>
-                            <td>
-                                <table id="shopping-cart" class="table table-responsive-md text-center">
-                                    <thead class="d-none">
+                    <tr th:each="order : ${orders}">
+                        <td><span th:text="${order.id}">  </span></td>
+                        <td><span th:text="${#temporals.format(order.orderDate, 'dd-MM-yyyy HH:mm')}"
+                                  class="text-center text-secondary"> </span></td>
+                        <td><span th:text="${order.user.username}"> </span></td>
+                        <td><span th:text="${order.user.id}"> </span></td>
+                        <td>
+                            <table  class="table table-responsive-md text-center">
+                                <thead class="d-none">
                                     <tr>
                                         <th class="col-md-5 text-center text-secondary"> Name</th>
-                                       <!-- <th class="col-md-3 text-center text-secondary"> Quantity</th>-->
+                                        <th class="col-md-3 text-center text-secondary"> Quantity</th>
                                     </tr>
-                                    </thead>
-                                    <tbody>
-
+                                </thead>
+                                <tbody>
                                     <tr th:each="product : ${order.products}" class="text-center">
-                                        <td class="col-md-5 align-middle"><span th:text="${product.name}"
-                                                                                class="text-center text-secondary">  </span>
+                                        <td class="col-md-5 align-middle">
+                                            <span th:text="${product.name}" class="text-center text-secondary">
+                                            </span>
                                         </td>
-                                       <!-- <td class="col-md-3 align-middle"><span th:text="${product.quantity}"
-                                                                                class="text-center text-secondary"> </span>
-                                        </td>-->
-
-                                        </span></td>
-
+                                        <td class="col-md-3 align-middle">
+                                            <span th:text="${product.quantity}" class="text-center text-secondary">
+                                            </span>
+                                        </td>
                                     </tr>
-                                    </tbody>
-
-                                </table>
-                            </td>
-                        </tr>
-                        </tbody>
-                    </table>
-                </div>
-
+                                </tbody>
+                            </table>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 </main>
