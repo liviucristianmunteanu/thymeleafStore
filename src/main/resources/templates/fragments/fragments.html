@@ -35,17 +35,13 @@
                     <li class="nav-item ">
                         <a class="nav-link text-light fs-5"  href="/products/all">Products</a>
                     </li>
-                    <li sec:authorize="hasRole('ROLE_USER')" class="nav-item ">
-                       <a sec:authorize="isAuthenticated()" class="nav-link text-light fs-5"  th:href="@{'/orders/user/' + ${id}}">My Orders</a>
-                        <!--<a class="nav-link text-light fs-5 disabled"  th:href="@{/orders/all/}">My Orders</a>-->
 
-                    </li>
                 </ul>
 
                 <div class="d-flex" >
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle btn btn-outline-light" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <a class="dropdown-toggle btn btn-outline-light" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 <span><i class="bi bi-person-bounding-box"></i></span>
 
                                 <span sec:authorize="isAuthenticated()">
@@ -55,6 +51,9 @@
                             <ul class="dropdown-menu">
                                 <li sec:authorize="hasRole('ROLE_ADMIN')" >
                                     <a class="dropdown-item fs-6" th:href="@{/orders/all}">Orders</a>
+                                </li>
+                                <li sec:authorize="hasRole('ROLE_USER')">
+                                    <a class="dropdown-item fs-6" sec:authorize="isAuthenticated()"  th:href="@{'/orders/user/' + ${id}}">My Orders</a>
                                 </li>
                                 <li sec:authorize="hasRole('ROLE_ADMIN')" >
                                     <a class="dropdown-item fs-6" th:href="@{/users}">Users</a>
@@ -97,7 +96,7 @@
 </header>
 <footer id="footer" th:fragment="footer" class="navbar container-fluid navbar-custom mt-auto">
     <div class="container">
-    <p class="text-light">&copy; 2022 thymeleafStore.com</p>
+    <p class="text-light">&copy; 2023 thymeleafStore.com</p>
     </div>
 </footer>
 <div th:fragment="scripts">
