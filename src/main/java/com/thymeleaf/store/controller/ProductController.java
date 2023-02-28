@@ -40,12 +40,22 @@ public class ProductController {
         String currentPrincipalName = auth.getName();
         MyUser userByUserName = userService.findUserByUserName(currentPrincipalName);
 
+
         List<Product> productsByShoppingCartId = quantityRepository.getProductsByShoppingCartId(userByUserName.getId());
         model.addAttribute("products", productRepository.findByQuantityGreaterThan(0L));
         model.addAttribute("cartSize", productsByShoppingCartId.size());
         model.addAttribute("id", userByUserName.getId());
 
+
         return "products";
+    }
+    @RequestMapping(value = {"/{id}"})
+    public String getSingleProduct(@PathVariable Integer id,Model model) {
+
+        Product product = productRepository.findProductById(id);
+        model.addAttribute("product",product);
+
+        return "singleProduct";
     }
     @RequestMapping(value = "/add/{id}")
     public String addProductToShoppingCart(@PathVariable Integer id, @ModelAttribute("product") @RequestBody Product frontendProduct) {

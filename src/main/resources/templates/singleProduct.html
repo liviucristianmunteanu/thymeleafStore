@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://www.thymeleaf.org ">
+<head th:replace="fragments/fragments:: html_head"/>
+
+
+</head>
+<body class="d-flex flex-column min-vh-100">
+<div th:replace="fragments/fragments:: header">
+</div>
+
+
+<main class="container-fluid mb-3">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 border border-2 border-light p-5 shadow">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h1 th:text="${product.name}" class="h1 fw-bold text-center text-secondary py-4"></h1>
+                    </div>
+                    <div class="col-md-12">
+                        <h3  th:text="${product.description}" class="h3 fw-bold text-center text-secondary py-2"></h3>
+                    </div>
+                    <div class="col-md-12">
+                        <h3 class="h3 fw-bold text-center text-secondary py-2" th:text="${product.price}"></h3>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-8 offset-md-2">
+                        <img th:src="@{${product.imageUrl}}" class="card-img-top" alt="...">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 offset-md-3 text-center py-4">
+                        <a class="btn btn-outline-info" th:href="@{/products/all}">
+                            Back to products</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</main>
+<div th:replace="fragments/fragments :: footer"></div>
+<div th:replace="fragments/fragments :: scripts"></div>
+<script>
+
+</script>
+</body>
+</html>
