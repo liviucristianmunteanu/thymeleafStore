@@ -59,15 +59,16 @@
                     </tr>
                     </tfoot>
                 </table>
+                <div class="mt-5">
+                    <form th:action="@{'/shopping-cart/to-order'}" method="POST">
+                        <div class="box-footer text-center">
+                            <button type="submit" class="btn btn-outline-info">Place order</button>
+                        </div>
+                    </form>
+                </div>
             </div>
 
-            <div class="mt-5">
-                <form th:action="@{'/shopping-cart/to-order'}" method="POST">
-                    <div class="box-footer text-center">
-                        <button type="submit" class="btn btn-outline-info">Place order</button>
-                    </div>
-                </form>
-            </div>
+
         </div>
     </div>
 </main>

@@ -8,7 +8,7 @@
 <body class="d-flex flex-column min-vh-100">
 <div th:replace="fragments/fragments:: header">
 </div>
-<main class="container-fluid">
+<main class="container-fluid mb-3">
     <div class="container">
         <div class="row">
             <div class="col-md-12">
@@ -30,7 +30,7 @@
                     <tbody>
                         <tr th:each="product : ${products}" class="text-center">
                             <td class="align-middle"><span th:text="${product.id}" class="text-center text-secondary">  </span></td>
-                            <td class="align-middle"><img th:src="@{${product.imageUrl}}" class="card-img-top product-thumbnail" alt="..."></td>
+                            <td class="align-middle"><img th:src="@{${product.imageUrl}}" class="card-img-top inventory-product-thumbnail" alt="..."></td>
                             <td class="align-middle"><span th:text="${product.name}" class="text-center text-secondary"> </span></td>
                             <td class="align-middle"><span th:text="${product.description}" class="text-center text-secondary"> </span></td>
                             <td class="align-middle"><span th:text="${product.quantity}" class="text-center text-secondary"> </span></td>

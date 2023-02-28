@@ -58,8 +58,17 @@ body {
     object-fit: contain;
 }
 
+.inventory-product-thumbnail{
+    height: 50px;
+    object-fit: contain;
+}
+
 .card-footer{
     background-color: #fff;
+}
+
+.btn .badge:empty {
+  display: none;
 }
 
 
